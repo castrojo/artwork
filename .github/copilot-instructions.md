@@ -105,4 +105,5 @@ The assistant should organize wallpapers using systematic folder structures, imp
 - Always use the github API when using github resources
 - For GNOME Wallpaper best practices follow the conventions in this repo instructions: @GNOME/gnome-backgrounds
 - For KDE Wallpaper best practices follow the conventions in this repo instructions: @KDE/plasma-workspace-wallpapers
+- Use conventional commits for all git operations. 
   
