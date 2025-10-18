@@ -3,10 +3,8 @@
 <wallpapers>
   <wallpaper deleted="false">
     <name>Project Bluefin - Prey</name>
-    <filename>~/.local/share/backgrounds/bluefin/prey/prey.xml</filename>
+    <filename>~/.local/share/backgrounds/bluefin/prey/prey-day.svg</filename>
+    <filename-dark>~/.local/share/backgrounds/bluefin/prey/prey-night.svg</filename-dark>
     <options>zoom</options>
-    <shade_type>solid</shade_type>
-    <pcolor>#464646</pcolor>
-    <scolor>#464646</scolor>
   </wallpaper>
 </wallpapers>
