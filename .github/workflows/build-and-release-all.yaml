@@ -40,3 +40,10 @@ jobs:
           workflow: bazzite-wallpapers.yaml
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: main
+
+      - name: Trigger Framework Wallpapers
+        uses: benc-uk/workflow-dispatch@e2e5e9a103e331dad343f381a29e654aea3cf8fc # v1
+        with:
+          workflow: framework-wallpapers.yaml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
