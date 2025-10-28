@@ -23,7 +23,7 @@ jobs:
         run: |
           mkdir -p output/packaging/kde/
           mkdir -p output/packaging/gnome/images
-          for wp in "collapse" "prey" "tenacious-pterosaur"; do
+          for wp in "prey" "tenacious-pterosaur"; do
             mv wallpapers/$wp/kde/*.avif output/packaging/kde/
             cp wallpapers/$wp/*.svg output/packaging/gnome/images
             cp -R wallpapers/$wp/gnome/gnome-background-properties output/packaging/gnome/
