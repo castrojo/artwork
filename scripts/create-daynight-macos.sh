@@ -18,9 +18,16 @@ if ! command -v wallpapper &> /dev/null; then
     brew install wallpapper
 fi
 
-# Convert to PNG first
-magick "$imageday" "/tmp/$outputname-day.png"
-magick "$imagenight" "/tmp/$outputname-night.png"
+# Convert to PNG first (with explicit size for SVG files)
+if [[ "$extension" == "svg" ]]; then
+  # SVG needs explicit dimensions - convert with background and size
+  magick -density 300 -background none "$imageday" -resize 3840x2160 "/tmp/$outputname-day.png"
+  magick -density 300 -background none "$imagenight" -resize 3840x2160 "/tmp/$outputname-night.png"
+else
+  # JXL, AVIF, etc. can convert directly
+  magick "$imageday" "/tmp/$outputname-day.png"
+  magick "$imagenight" "/tmp/$outputname-night.png"
+fi
 
 # Create wallpapper config JSON (must be an array at root level)
 cat > /tmp/$outputname-config.json <<EOF
