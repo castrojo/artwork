@@ -18,17 +18,36 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
         with:
           fetch-depth: 0
-      - name: Create tarball
+      - name: Create tarballs
         shell: bash
         run: |
-          mkdir -p output/packaging/kde/
+          # Create separate archives for each platform
+          mkdir -p output/packaging/macos
+          mkdir -p output/packaging/kde
           mkdir -p output/packaging/gnome/images
-          for wp in "prey" "tenacious-pterosaur"; do
-            mv wallpapers/$wp/kde/*.avif output/packaging/kde/
-            cp wallpapers/$wp/*.svg output/packaging/gnome/images
-            cp -R wallpapers/$wp/gnome/gnome-background-properties output/packaging/gnome/
+          mkdir -p output/packaging/png
+          
+          # Process all extra wallpapers: collapse, prey, tenacious-pterosaur
+          for wp in "collapse" "prey" "tenacious-pterosaur"; do
+            # macOS: HEIC dynamic wallpapers
+            cp wallpapers/$wp/macos/*.heic output/packaging/macos/ 2>/dev/null || true
+            
+            # KDE: AVIF wallpapers
+            cp wallpapers/$wp/kde/*.avif output/packaging/kde/ 2>/dev/null || true
+            
+            # GNOME: SVG wallpapers + XML metadata
+            cp wallpapers/$wp/*.svg output/packaging/gnome/images/ 2>/dev/null || true
+            cp -R wallpapers/$wp/gnome/gnome-background-properties output/packaging/gnome/ 2>/dev/null || true
+            
+            # PNG: For other desktops
+            cp wallpapers/$wp/macos/*.png output/packaging/png/ 2>/dev/null || true
           done
-          cd output/packaging && tar -acvf bluefin-wallpapers-extra.tar.zstd *
+          
+          # Create archives
+          cd output/packaging/macos && tar -acvf ../bluefin-wallpapers-extra-macos.tar.zstd *.heic && cd -
+          cd output/packaging/kde && tar -acvf ../bluefin-wallpapers-extra-kde.tar.zstd *.avif && cd -
+          cd output/packaging/gnome && tar -acvf ../bluefin-wallpapers-extra-gnome.tar.zstd * && cd -
+          cd output/packaging/png && tar -acvf ../bluefin-wallpapers-extra-png.tar.zstd *.png && cd -
 
       - name: Determine tag
         id: tag
@@ -40,5 +59,5 @@ jobs:
           tag:   ${{ steps.tag.outputs.tag }}
           allowUpdates: true
           name:  "${{ steps.tag.outputs.tag }}"
-          artifacts: "output/packaging/bluefin-wallpapers-extra.tar.zstd"
+          artifacts: "output/packaging/bluefin-wallpapers-extra-*.tar.zstd"
           token: ${{ secrets.GITHUB_TOKEN }}
