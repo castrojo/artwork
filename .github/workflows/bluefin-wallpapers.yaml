@@ -18,14 +18,32 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
         with:
           fetch-depth: 0
-      - name: Create tarball
+      - name: Create tarballs
         shell: bash
         run: |
-          mkdir -p output/packaging/kde/
-          mkdir -p output/packaging/gnome/
-          mv wallpapers/bluefin/kde-support/*.avif output/packaging/kde/
-          cp -R wallpapers/bluefin/* output/packaging/gnome/
-          cd output/packaging && tar -acvf bluefin-wallpapers.tar.zstd *
+          # Create separate archives for each platform
+          mkdir -p output/packaging/macos
+          mkdir -p output/packaging/kde
+          mkdir -p output/packaging/gnome
+          mkdir -p output/packaging/png
+          
+          # macOS: HEIC dynamic wallpapers
+          cp -R wallpapers/bluefin/macos/*.heic output/packaging/macos/
+          cd output/packaging/macos && tar -acvf ../bluefin-wallpapers-macos.tar.zstd *.heic && cd -
+          
+          # KDE: AVIF wallpapers
+          cp wallpapers/bluefin/kde-support/*.avif output/packaging/kde/
+          cd output/packaging/kde && tar -acvf ../bluefin-wallpapers-kde.tar.zstd *.avif && cd -
+          
+          # GNOME: JXL wallpapers + XML metadata
+          cp -R wallpapers/bluefin/images/*.jxl output/packaging/gnome/
+          cp -R wallpapers/bluefin/images/*.xml output/packaging/gnome/
+          cp -R wallpapers/bluefin/gnome-background-properties output/packaging/gnome/
+          cd output/packaging/gnome && tar -acvf ../bluefin-wallpapers-gnome.tar.zstd * && cd -
+          
+          # PNG: For other desktops (Hyprland, Niri, Sway, etc.)
+          cp -R wallpapers/bluefin/png/*.png output/packaging/png/
+          cd output/packaging/png && tar -acvf ../bluefin-wallpapers-png.tar.zstd *.png && cd -
 
       - name: Determine tag
         id: tag
@@ -37,5 +55,5 @@ jobs:
           tag:   ${{ steps.tag.outputs.tag }}
           allowUpdates: true
           name:  "${{ steps.tag.outputs.tag }}"
-          artifacts: "output/packaging/bluefin-wallpapers.tar.zstd"
+          artifacts: "output/packaging/bluefin-wallpapers-*.tar.zstd"
           token: ${{ secrets.GITHUB_TOKEN }}
