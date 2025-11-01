@@ -9,3 +9,9 @@ create-daynight-kde $imageday $imagenight $outputname:
 create-daynight-gnome $imageday $imagenight $outputname $description:
     #!/usr/bin/env bash
     scripts/create-daynight-gnome.sh $imageday $imagenight $outputname "$description"
+
+# Create a day-night wallpaper for macOS
+[group('Convert')]
+create-daynight-macos $imageday $imagenight $outputname:
+    #!/usr/bin/env bash
+    scripts/create-daynight-macos.sh $imageday $imagenight $outputname
