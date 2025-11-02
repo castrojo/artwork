@@ -110,7 +110,18 @@ The repository includes automated release workflows:
 - `bazzite-wallpapers.yaml` - Releases Bazzite wallpapers
 - `framework-wallpapers.yaml` - Releases Framework wallpapers
 
-Workflows create dated releases (e.g., `v2024-01-15`) with tarball artifacts.
+### Release Strategy
+
+Each wallpaper pack has its own versioned release tag:
+- Bluefin: `bluefin-v{YYYY-MM-DD}` (e.g., `bluefin-v2024-01-15`)
+- Bluefin Extra: `bluefin-extra-v{YYYY-MM-DD}`
+- Aurora: `aurora-v{YYYY-MM-DD}`
+- Bazzite: `bazzite-v{YYYY-MM-DD}`
+- Framework: `framework-v{YYYY-MM-DD}`
+
+This allows independent releases for each wallpaper pack. When updating a single pack, only that pack needs to be released without forcing all packs to be updated together.
+
+**Note for Homebrew Cask maintainers:** The livecheck patterns in Casks need to match the new tag format for each specific wallpaper pack.
 
 ## Contributing
 
