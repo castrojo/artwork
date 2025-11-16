@@ -10,7 +10,7 @@ artwork/
 │   ├── aurora/          # Aurora wallpapers (KDE Plasma format)
 │   ├── bazzite/         # Bazzite wallpapers
 │   ├── bluefin/         # Bluefin wallpapers
-│   ├── bluefin-wallpapers-extra/  # Additional Bluefin wallpapers (legacy)
+│   ├── bluefin-wallpapers-extra/  # Additional Bluefin wallpapers
 │   ├── collapse/        # Collapse day-night wallpaper
 │   ├── dusk/            # Dusk day-night wallpaper
 │   ├── framework/       # Framework day-night wallpaper
