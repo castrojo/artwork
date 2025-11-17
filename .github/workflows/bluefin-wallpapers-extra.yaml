@@ -35,8 +35,8 @@ jobs:
             # KDE: AVIF wallpapers
             cp wallpapers/$wp/kde/*.avif output/packaging/kde/ 2>/dev/null || true
             
-            # GNOME: SVG wallpapers + XML metadata
-            cp wallpapers/$wp/*.svg output/packaging/gnome/images/ 2>/dev/null || true
+            # GNOME: SVG or JXL wallpapers + XML metadata
+            cp wallpapers/$wp/*.{svg,jxl} output/packaging/gnome/images/ 2>/dev/null || true
             cp -R wallpapers/$wp/gnome/gnome-background-properties output/packaging/gnome/ 2>/dev/null || true
             
             # PNG: For other desktops
